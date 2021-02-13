@@ -4,7 +4,9 @@
   "description": "Web server to run our frontends",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev:bootstrap": "cd ../bootstrap && yarn dev",
+    "dev:welcome": "cd ../welcome && yarn serve",
+    "dev:music": "cd ../music && yarn start"
   },
   "author": "Gonçalo Morais <gnclmorais@gmail.com>",
   "license": "MIT",
