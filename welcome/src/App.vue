@@ -1,7 +1,7 @@
 <template>
-  <div class="body">
+  <div class="body h-full flex flex-col">
     <header class="bg-red-600 text-white flex px-6 py-5">
-      <div id="logo" class="flex-shrink logo">
+      <div id="logo" class="logo flex-shrink uppercase">
         <router-link to="/">Red Records</router-link>
       </div>
 
@@ -22,10 +22,14 @@
 </template>
 
 <style>
+html,
+body {
+  height: 100%;
+}
+
 .logo {
   font-family: Impact;
   font-size: 2em;
-  text-transform: uppercase;
 }
 
 .nav-item +.nav-item::before {
