@@ -17,9 +17,8 @@ const routes = [
   }
 ]
 
-// TODO: Find why I had to hardcode this route
 const router = createRouter({
-  history: createWebHistory('/hello/'),
+  history: createWebHistory(process.env.VUE_APP_BASE_URL),
   routes
 })
 
