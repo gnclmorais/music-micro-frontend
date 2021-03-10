@@ -7,7 +7,10 @@ const unmountClass = 'unmount';
 const injectScript = (parent, src, innerHTML) => {
   const script = document.createElement('SCRIPT');
 
+  // There there is no `src`, setting it would cause the <script> tag to try to
+  // fetch a file from the href `undefined`
   if (src) script.src = src;
+
   script.innerHTML = innerHTML;
   script.classList.add(unmountClass);
 
@@ -26,7 +29,7 @@ function unmount() {
   body.innerHTML = '';
 }
 
-function mount(frontend) {
+function mount(frontend, page) {
   const { host } = new URL(window.location.href);
   const base = availableApps[frontend];
 
@@ -74,16 +77,18 @@ function mount(frontend) {
     .catch(console.log);  
 }
 
-function navigateTo(frontend, { back = false } = {}) {
+function navigateTo(url, { back = false } = {}) {
   unmount();
 
   if (back) {
-    history.replaceState({ id: frontend }, '', `/${frontend}`);
+    history.replaceState({ id: url }, '', url);
   } else {
-    history.pushState({ id: frontend }, '', `/${frontend}`);
+    history.pushState({ id: url }, '', url);
   }
 
-  mount(frontend);
+  const { pathname } = new URL(url);
+  const [, frontend, , page] = pathname.split('/')
+  mount(frontend, page);
 }
 
 // Set up our public API
@@ -91,11 +96,8 @@ if (!window.bootstrap) {
   window.bootstrap = { router: { navigateTo } };
 }
 
-const { pathname } = new URL(window.location.href);
-const frontend = pathname.replace(/\//g, '');
-
 // Navigate to our first page
-navigateTo(frontend);
+navigateTo(window.location.href);
 
 // Set up back and forward control
-window.addEventListener('popstate', ({ state: { id: frontend } }) => navigateTo(frontend, { back: true }));
+window.addEventListener('popstate', ({ state: { id: url } }) => navigateTo(url, { back: true }));
