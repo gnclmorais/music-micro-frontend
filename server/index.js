@@ -7,7 +7,8 @@ const port = 8080
 
 app.use(cors())
 
-app.use(/\/(hello|play)/, express.static(path.join(__dirname, '../bootstrap/dist')))
+app.use('/hello/:page', express.static(path.join(__dirname, '../bootstrap/dist')))
+app.use(/\/play/, express.static(path.join(__dirname, '../bootstrap/dist')))
 app.use('/mfe/welcome', express.static(path.join(__dirname, '../welcome/dist')))
 app.use('/mfe/music', express.static(path.join(__dirname, '../music/build')))
 
