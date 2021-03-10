@@ -4,6 +4,7 @@
   "description": "Web server to run our frontends",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "dev:bootstrap": "cd ../bootstrap && yarn dev",
     "dev:welcome": "cd ../welcome && yarn serve",
     "dev:music": "cd ../music && yarn start"
