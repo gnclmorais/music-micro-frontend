@@ -52,6 +52,7 @@ export default {
         body: JSON.stringify(this.formData),
       })
       .then(response => {
+        // Success
         if (response.ok) return response.json()
 
         // Error
@@ -59,10 +60,11 @@ export default {
           throw new Error(message)
         })
       })
-      .then(({ data: { token } }) => {
-        console.log(token);
+      .then((/*{ data: { token } }*/) => {
+        // Success
+        window.bootstrap.router.navigateTo('/play')
       })
-      .catch((message) => alert(message))
+      .catch(alert) // Error
     }
   }
 }

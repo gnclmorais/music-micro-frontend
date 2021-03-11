@@ -30,6 +30,8 @@ function unmount() {
 }
 
 function mount(frontend, page) {
+  console.log(`Mounting ${frontend}…`);
+
   const { host } = new URL(window.location.href);
   const base = availableApps[frontend];
 
@@ -78,6 +80,8 @@ function mount(frontend, page) {
 }
 
 function navigateTo(url, { back = false } = {}) {
+  console.log(`Navigating to ${url}`)
+
   unmount();
 
   if (back) {
@@ -86,8 +90,7 @@ function navigateTo(url, { back = false } = {}) {
     history.pushState({ id: url }, '', url);
   }
 
-  const { pathname } = new URL(url);
-  const [, frontend, , page] = pathname.split('/')
+  const [, frontend, , page] = url.split('/')
   mount(frontend, page);
 }
 
@@ -97,7 +100,8 @@ if (!window.bootstrap) {
 }
 
 // Navigate to our first page
-navigateTo(window.location.href);
+const { pathname } = new URL(window.location.href);
+navigateTo(pathname);
 
 // Set up back and forward control
 window.addEventListener('popstate', ({ state: { id: url } }) => navigateTo(url, { back: true }));
