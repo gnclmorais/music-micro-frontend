@@ -7,9 +7,14 @@ const port = 8080
 
 app.use(cors())
 
+app.get('/', (req, res) => res.redirect(301, '/hello'))
+
 app.use('/hello/:page', express.static(path.join(__dirname, '../bootstrap/dist')))
+app.use('/hello', express.static(path.join(__dirname, '../bootstrap/dist')))
+
 app.use(/\/play/, express.static(path.join(__dirname, '../bootstrap/dist')))
+
 app.use('/mfe/welcome', express.static(path.join(__dirname, '../welcome/dist')))
 app.use('/mfe/music', express.static(path.join(__dirname, '../music/build')))
 
-app.listen(port, () => console.log(`Web server listening at http://localhost:${port}…`));
+app.listen(port, () => console.log(`Server listening at http://localhost:${port}…`))
