@@ -3,6 +3,12 @@ const availableApps = {
   play: '/mfe/music',
 };
 
+// TODO: Show only messages for now
+const will_mount = () => console.log('will_mount event')
+const  did_mount = () => console.log('did_mount event')
+const will_unmount = () => console.log('will_unmount event')
+const  did_unmount = () => console.log('did_unmount event')
+
 const unmountClass = 'unmount';
 const injectScript = (parent, src, innerHTML) => {
   const script = document.createElement('SCRIPT');
@@ -18,6 +24,8 @@ const injectScript = (parent, src, innerHTML) => {
 }
 
 function unmount() {
+  will_unmount();
+
   const head = document.head;
   const body = document.body;
 
@@ -27,9 +35,12 @@ function unmount() {
 
   // Empty body
   body.innerHTML = '';
+
+  did_unmount();
 }
 
 function mount(frontend, page) {
+  will_mount();
   console.log(`Mounting ${frontend}…`);
 
   const { host } = new URL(window.location.href);
@@ -75,6 +86,8 @@ function mount(frontend, page) {
           body.appendChild(document.adoptNode(node));
         }
       });
+
+      did_mount();
     })
     .catch(console.log);  
 }
