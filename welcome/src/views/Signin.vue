@@ -60,8 +60,11 @@ export default {
           throw new Error(message)
         })
       })
-      .then((/*{ data: { token } }*/) => {
-        // Success
+      .then(({ data: { token } }) => {
+        // Store the signin token we received
+        window.router.token = token
+
+        // Proceeed
         window.bootstrap.router.navigateTo('/play')
       })
       .catch(alert) // Error
