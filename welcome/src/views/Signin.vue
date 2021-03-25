@@ -62,7 +62,7 @@ export default {
       })
       .then(({ data: { token } }) => {
         // Store the signin token we received
-        window.router.token = token
+        window.bootstrap.auth.setToken(token)
 
         // Proceeed
         window.bootstrap.router.navigateTo('/play')

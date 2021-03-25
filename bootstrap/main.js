@@ -115,12 +115,14 @@
   if (!window.bootstrap) {
     window.bootstrap = {
       router: { navigateTo },
-      get token() {
-        return window.localStorage.getItem(tokenName);
+      auth: {
+        getToken() {
+          return window.localStorage.getItem(tokenName);
+        },
+        setToken(newToken) {
+          return window.localStorage.setItem(tokenName, newToken);
+        }
       },
-      set token(newToken) {
-        window.localStorage.setItem(tokenName, newToken);
-      }
     };
   }
 
@@ -130,7 +132,7 @@
   });
 
   // Try to authenticate user on load
-  const token = window.bootstrap.token;
+  const token = window.bootstrap.auth.getToken();
   if (token) {
     fetch('https://buildingmfe.maxgallo.io/api/validate', {
       method: 'POST',
@@ -146,7 +148,10 @@
       })
     })
     .then(() => navigateTo('/play')) // Go to Music if logged in
-    .catch(alert) // Error
+    .catch((error) => {
+      alert(error)
+      navigateTo('/hello')
+    })
   } else {
     // Follow the page requested if not logged in
     const { pathname } = new URL(window.location.href);
